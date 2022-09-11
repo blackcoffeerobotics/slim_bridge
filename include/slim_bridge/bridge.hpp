@@ -167,15 +167,6 @@ namespace slim_bridge{
         );
     }
 
-    void get_robot_name(std::string& returnable, std::string& robot_name){
-        robot_name = std::string(std::getenv("ROBOT_NAME"));
-        auto robot_name_split = tokenize(robot_name);
-        for (auto split : robot_name_split){
-            returnable += split + "_";
-        }
-        robot_name += "/";
-    }
-
 }
 
 #endif

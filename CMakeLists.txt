@@ -18,9 +18,9 @@ find_package(yaml_cpp_vendor REQUIRED)
 find_package(rmw_implementation_cmake REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(robot_msgs REQUIRED)
 find_package(tf2_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 
 # find ROS 1 packages
 set(cmake_extras_files cmake/find_ros1_package.cmake)
@@ -48,34 +48,27 @@ if(NOT ros1_roscpp_FOUND)
 endif()
 
 find_ros1_package(std_msgs REQUIRED)
-find_ros1_package(robot_msgs REQUIRED)
 find_ros1_package(tf2_msgs REQUIRED)
 find_ros1_package(geometry_msgs REQUIRED)
 find_ros1_package(sensor_msgs REQUIRED)
+find_ros1_package(nav_msgs REQUIRED)
 
 set(SLIM_BRIDGE_DEPENDS
   rclcpp
   ros1_roscpp
   std_msgs
   ros1_std_msgs
-  robot_msgs
-  ros1_robot_msgs
   yaml_cpp_vendor
   sensor_msgs
   ros1_sensor_msgs
   tf2_msgs
   ros1_tf2_msgs
+  nav_msgs
+  ros1_nav_msgs
 )
 
 ament_export_include_directories("include/${PROJECT_NAME}")
-# ament_export_dependencies(
-#   rclcpp
-#   ros1_roscpp
-#   std_msgs
-#   ros1_std_msgs
-#   robot_msgs
-#   ros1_robot_msgs
-# )
+
 ament_package(
   CONFIG_EXTRAS ${cmake_extras_files}
 )
@@ -97,6 +90,6 @@ install(
 )
 
 install(
-  DIRECTORY cmake
+  DIRECTORY cmake launch config
   DESTINATION share/${PROJECT_NAME}
 )

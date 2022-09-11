@@ -137,24 +137,6 @@ namespace slim_bridge
                 >(package_name, message_type);
             }
         }
-        else if (package_name == "robot_msgs"){
-            if (message_type == "CommonPath"){
-                factory =  std::make_shared<
-                    Factory<
-                        robot_msgs::CommonPath,
-                        robot_msgs::msg::CommonPath
-                    >
-                >(package_name, message_type);
-            }
-            else if (message_type == "CommonPose"){
-                factory =  std::make_shared<
-                    Factory<
-                        robot_msgs::CommonPose,
-                        robot_msgs::msg::CommonPose
-                    >
-                >(package_name, message_type);
-            }
-        }
         else if (package_name == "sensor_msgs"){
             if (message_type == "PointField"){
                 factory = std::make_shared<

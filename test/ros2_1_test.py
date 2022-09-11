@@ -9,9 +9,8 @@ def main(args=None):
     rclpy.init(args=args)
 
     node = rclpy.create_node('ros2_1_test')
-    qos = rclpy.qos.QoSProfile(durability=rclpy.qos.QoSDurabilityPolicy.RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL, depth=10)
-    robot_name = os.environ['ROBOT_NAME']
-    publisher = node.create_publisher(String, robot_name+'/ros2_to_1', qos_profile=qos)
+    qos = rclpy.qos.QoSProfile(durability=rclpy.qos.QoSDurabilityPolicy.RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL, depth=1)
+    publisher = node.create_publisher(String, '/ros2_to_1', qos_profile=qos)
 
     msg = String()
 

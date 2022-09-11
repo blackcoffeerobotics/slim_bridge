@@ -14,8 +14,6 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "geometry_msgs/msg/pose2_d.hpp"
 #include "nav_msgs/msg/path.hpp"
-#include "robot_msgs/msg/common_path.hpp"
-#include "robot_msgs/msg/common_pose.hpp"
 #include "sensor_msgs/msg/point_cloud2.hpp"
 #include "sensor_msgs/msg/image.hpp"
 #include "sensor_msgs/msg/compressed_image.hpp"
@@ -40,8 +38,6 @@
 #include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/Pose2D.h"
 #include "nav_msgs/Path.h"
-#include "robot_msgs/CommonPath.h"
-#include "robot_msgs/CommonPose.h"
 #include "sensor_msgs/PointCloud2.h"
 #include "sensor_msgs/Image.h"
 #include "sensor_msgs/CompressedImage.h"
@@ -176,24 +172,6 @@ namespace slim_bridge
                 return returnable;
             }
         );
-    }
-
-    template<>
-    void convert_ros1_to_2(
-        const robot_msgs::CommonPath & ros1_msg,
-        robot_msgs::msg::CommonPath & ros2_msg
-    ){
-        ros2_msg.robot_name = ros1_msg.robot_name;
-        convert_ros1_to_2(ros1_msg.robot_path, ros2_msg.robot_path);
-    }
-
-    template<>
-    void convert_ros1_to_2(
-        const robot_msgs::CommonPose & ros1_msg,
-        robot_msgs::msg::CommonPose & ros2_msg
-    ){
-        ros2_msg.robot_name = ros1_msg.robot_name;
-        convert_ros1_to_2(ros1_msg.robot_pose, ros2_msg.robot_pose);
     }
 
     template<>
@@ -440,24 +418,6 @@ namespace slim_bridge
                 return returnable;
             }
         );
-    }
-
-    template<>
-    void convert_ros2_to_1(
-        const robot_msgs::msg::CommonPath & ros2_msg,
-        robot_msgs::CommonPath & ros1_msg
-    ){
-        ros1_msg.robot_name = ros2_msg.robot_name;
-        convert_ros2_to_1(ros2_msg.robot_path, ros1_msg.robot_path);
-    }
-
-    template<>
-    void convert_ros2_to_1(
-        const robot_msgs::msg::CommonPose & ros2_msg,
-        robot_msgs::CommonPose & ros1_msg
-    ){
-        ros1_msg.robot_name = ros2_msg.robot_name;
-        convert_ros2_to_1(ros2_msg.robot_pose, ros1_msg.robot_pose);
     }
 
     template<>

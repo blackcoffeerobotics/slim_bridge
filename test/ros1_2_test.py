@@ -8,8 +8,7 @@ from std_msgs.msg import String
 
 def main():
     rospy.init_node('ros1_2_test')
-    robot_name = os.environ['ROBOT_NAME']
-    publisher = rospy.Publisher(robot_name+'/ros1_to_2', String, queue_size=1, latch=True)
+    publisher = rospy.Publisher('/ros1_to_2', String, queue_size=1, latch=True)
     msg = String()
     dictionary = {
     'topic_name': '/test_string_1_2',
