@@ -4,10 +4,10 @@
   <name>slim_bridge</name>
   <version>0.10.3</version>
   <description>A slim bridge between ROS 1 and ROS 2</description>
+  <author email="praneeth@blackcoffeerobotics.com">Kvk Praneeth</author>
+  <maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
   <maintainer email="praneeth@blackcoffeerobotics.com">Kvk Praneeth</maintainer>
   <license>Apache License 2.0</license>
-
-  <author email="praneeth@blackcoffeerobotics.com">Kvk Praneeth</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>ament_index_python</buildtool_depend>
