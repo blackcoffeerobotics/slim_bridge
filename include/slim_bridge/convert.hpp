@@ -17,6 +17,8 @@
 #ifndef INCLUDE_SLIM_BRIDGE_CONVERT_HPP_
 #define INCLUDE_SLIM_BRIDGE_CONVERT_HPP_
 
+#include <algorithm>
+
 // ROS2 Message Inclusions
 #include "std_msgs/msg/bool.hpp"
 #include "std_msgs/msg/int32.hpp"
@@ -40,6 +42,8 @@
 #include "geometry_msgs/Transform.h"
 #include "geometry_msgs/TransformStamped.h"
 #include "tf2_msgs/TFMessage.h"
+#include "sensor_msgs/msg/nav_sat_status.hpp"
+#include "sensor_msgs/msg/nav_sat_fix.hpp"
 
 // ROS1 Message Inclusions
 #include "std_msgs/Bool.h"
@@ -64,6 +68,8 @@
 #include "geometry_msgs/msg/transform.hpp"
 #include "geometry_msgs/msg/transform_stamped.hpp"
 #include "tf2_msgs/msg/tf_message.hpp"
+#include "sensor_msgs/NavSatStatus.h"
+#include "sensor_msgs/NavSatFix.h"
 
 namespace slim_bridge {
 
@@ -79,7 +85,7 @@ namespace slim_bridge {
 
     template<>
     void convert_ros1_to_2(
-        const std_msgs::Int32 & ros1_msg, 
+        const std_msgs::Int32 & ros1_msg,
         std_msgs::msg::Int32 & ros2_msg
     ) {
         ros2_msg.data = ros1_msg.data;
@@ -87,7 +93,7 @@ namespace slim_bridge {
 
     template<>
     void convert_ros1_to_2(
-        const std_msgs::Float32 & ros1_msg, 
+        const std_msgs::Float32 & ros1_msg,
         std_msgs::msg::Float32 & ros2_msg
     ) {
         ros2_msg.data = ros1_msg.data;
@@ -95,7 +101,7 @@ namespace slim_bridge {
 
     template<>
     void convert_ros1_to_2(
-        const std_msgs::Header & ros1_msg, 
+        const std_msgs::Header & ros1_msg,
         std_msgs::msg::Header & ros2_msg
     ) {
         ros2_msg.frame_id = ros1_msg.frame_id;
@@ -105,7 +111,7 @@ namespace slim_bridge {
 
     template<>
     void convert_ros1_to_2(
-        const std_msgs::String & ros1_msg, 
+        const std_msgs::String & ros1_msg,
         std_msgs::msg::String & ros2_msg
     ) {
         ros2_msg.data = ros1_msg.data;
@@ -144,7 +150,7 @@ namespace slim_bridge {
 
     template<>
     void convert_ros1_to_2(
-        const geometry_msgs::Pose & ros1_msg, 
+        const geometry_msgs::Pose & ros1_msg,
         geometry_msgs::msg::Pose & ros2_msg
     ) {
         convert_ros1_to_2(ros1_msg.position, ros2_msg.position);
@@ -306,6 +312,33 @@ namespace slim_bridge {
             });
     }
 
+    template<>
+    void convert_ros1_to_2(
+        const sensor_msgs::NavSatStatus & ros1_msg,
+        sensor_msgs::msg::NavSatStatus & ros2_msg
+    ) {
+        ros2_msg.service = ros1_msg.service;
+        ros2_msg.status = ros1_msg.status;
+    }
+
+    template<>
+    void convert_ros1_to_2(
+        const sensor_msgs::NavSatFix & ros1_msg,
+        sensor_msgs::msg::NavSatFix & ros2_msg
+    ) {
+        convert_ros1_to_2(ros1_msg.header, ros2_msg.header);
+        convert_ros1_to_2(ros1_msg.status, ros2_msg.status);
+
+        ros2_msg.altitude = ros1_msg.altitude;
+        ros2_msg.latitude = ros1_msg.latitude;
+        ros2_msg.longitude = ros1_msg.longitude;
+        ros2_msg.position_covariance_type = ros1_msg.position_covariance_type;
+
+        for (size_t i = 0; i < ros1_msg.position_covariance.size(); i++) {
+            ros2_msg.position_covariance[i] = ros1_msg.position_covariance[i];
+        }
+    }
+
     template<typename ROS1_T, typename ROS2_T>
     void convert_ros2_to_1(const ROS2_T & ros2_msg, ROS1_T & ros1_msg);
 
@@ -345,7 +378,7 @@ namespace slim_bridge {
 
     template<>
     void convert_ros2_to_1(
-        const std_msgs::msg::String & ros2_msg, 
+        const std_msgs::msg::String & ros2_msg,
         std_msgs::String & ros1_msg
     ) {
         ros1_msg.data = ros2_msg.data;
@@ -384,7 +417,7 @@ namespace slim_bridge {
 
     template<>
     void convert_ros2_to_1(
-        const geometry_msgs::msg::Pose & ros2_msg, 
+        const geometry_msgs::msg::Pose & ros2_msg,
         geometry_msgs::Pose & ros1_msg
     ) {
         convert_ros2_to_1(ros2_msg.position, ros1_msg.position);
@@ -544,6 +577,33 @@ namespace slim_bridge {
                 convert_ros2_to_1(transform, returnable);
                 return returnable;
             });
+    }
+
+    template<>
+    void convert_ros2_to_1(
+        const sensor_msgs::msg::NavSatStatus & ros2_msg,
+        sensor_msgs::NavSatStatus & ros1_msg
+    ) {
+        ros1_msg.service = ros2_msg.service;
+        ros1_msg.status = ros2_msg.status;
+    }
+
+    template<>
+    void convert_ros2_to_1(
+        const sensor_msgs::msg::NavSatFix & ros2_msg,
+        sensor_msgs::NavSatFix & ros1_msg
+    ) {
+        convert_ros2_to_1(ros2_msg.header, ros1_msg.header);
+        convert_ros2_to_1(ros2_msg.status, ros1_msg.status);
+
+        ros1_msg.altitude = ros2_msg.altitude;
+        ros1_msg.latitude = ros2_msg.latitude;
+        ros1_msg.longitude = ros2_msg.longitude;
+        ros1_msg.position_covariance_type = ros2_msg.position_covariance_type;
+
+        for (size_t i = 0; i < ros2_msg.position_covariance.size(); i++) {
+            ros1_msg.position_covariance[i] = ros2_msg.position_covariance[i];
+        }
     }
 
 }  // namespace slim_bridge

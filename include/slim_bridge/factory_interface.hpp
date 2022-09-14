@@ -27,7 +27,7 @@
 namespace slim_bridge {
 
 class FactoryInterface {
-    public:
+ public:
         virtual
         rclcpp::PublisherBase::SharedPtr
         create_ros2_publisher(

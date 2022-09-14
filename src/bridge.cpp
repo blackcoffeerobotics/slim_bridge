@@ -137,7 +137,11 @@ int main(int argc, char * argv[]) {
             slim_bridge::BridgeOptions options;
             std::string package_name;
             std::string message_type;
-            slim_bridge::read_string(msg->data, options, package_name, message_type);
+            slim_bridge::read_string(
+                msg->data,
+                options,
+                package_name,
+                message_type);
             try {
                 create_bridge_2_to_1(
                     package_name,
@@ -145,7 +149,7 @@ int main(int argc, char * argv[]) {
                     options,
                     bridge);
             }
-            catch(const std::exception & e){
+            catch(const std::exception & e) {
                 std::cout << e.what() << "\n";
             }
         });
@@ -156,7 +160,11 @@ int main(int argc, char * argv[]) {
             slim_bridge::BridgeOptions options;
             std::string package_name;
             std::string message_type;
-            slim_bridge::read_string(msg->data, options, package_name, message_type);
+            slim_bridge::read_string(
+                msg->data,
+                options,
+                package_name,
+                message_type);
             try {
                 create_bridge_1_to_2(
                     package_name,
@@ -175,7 +183,11 @@ int main(int argc, char * argv[]) {
             slim_bridge::BridgeOptions options;
             std::string package_name;
             std::string message_type;
-            slim_bridge::read_string(msg->data, options, package_name, message_type);
+            slim_bridge::read_string(
+                msg->data,
+                options,
+                package_name,
+                message_type);
             try {
                 create_bridge_2_to_1(
                     package_name,

@@ -20,7 +20,8 @@
 #include <iostream>
 #include <string>
 #include <memory>
-#include "factory.hpp"
+
+#include "slim_bridge/factory.hpp"
 
 namespace slim_bridge {
     /*
@@ -181,6 +182,20 @@ namespace slim_bridge {
                     Factory<
                         sensor_msgs::CameraInfo,
                         sensor_msgs::msg::CameraInfo
+                    >
+                >(package_name, message_type);
+            } else if (message_type == "NavSatStatus") {
+                factory = std::make_shared<
+                    Factory<
+                        sensor_msgs::NavSatStatus,
+                        sensor_msgs::msg::NavSatStatus
+                    >
+                >(package_name, message_type);
+            } else if (message_type == "NavSatFix") {
+                factory = std::make_shared<
+                    Factory<
+                        sensor_msgs::NavSatFix,
+                        sensor_msgs::msg::NavSatFix
                     >
                 >(package_name, message_type);
             }

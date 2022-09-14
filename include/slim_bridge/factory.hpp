@@ -19,8 +19,9 @@
 
 #include <string>
 #include <memory>
-#include "factory_interface.hpp"
-#include "convert.hpp"
+
+#include "slim_bridge/factory_interface.hpp"
+#include "slim_bridge/convert.hpp"
 
 namespace slim_bridge {
 /*
@@ -32,7 +33,7 @@ namespace slim_bridge {
 */
 template<typename ROS1_T, typename ROS2_T>
 class Factory : public FactoryInterface {
-    public:
+ public:
         Factory(const std::string package_name,
             const std::string message_type):
             _package_name(package_name),
@@ -99,7 +100,7 @@ class Factory : public FactoryInterface {
         std::string _package_name;
         std::string _message_type;
 
-    protected:
+ protected:
         static void
         ros2_callback(
             std::shared_ptr<const ROS2_T> ros2_msg,

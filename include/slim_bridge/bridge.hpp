@@ -21,10 +21,11 @@
 #include <sstream>
 #include <cstdlib>
 #include <memory>
-#include "yaml-cpp/yaml.h"
+#include <string>
 
-#include "factories.hpp"
-#include "qos.hpp"
+#include "yaml-cpp/yaml.h"
+#include "slim_bridge/factories.hpp"
+#include "slim_bridge/qos.hpp"
 
 namespace slim_bridge {
 

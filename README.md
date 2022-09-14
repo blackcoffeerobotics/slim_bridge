@@ -76,3 +76,13 @@ Sample scripts are provided in the `examples/` directory.
 
 #### NOTE
 Both "from source" and Docker based run instructions support namespacing of `slim_bridge` node and topics. If `ROBOT_NAME` environment variable is defined, the topics defined in the parameter file (and added via advanced configuration) take the namespace as per the environent variable. To avoid topic namespacing, use absolute topic names (prepend with a `/`)
+
+## Supported Message Types
+
+| Package | Message Type |
+|---|---|
+|sensor_msgs|PointField, PointCloud2, Image, CompressedImage, LaserScan, CameraInfo, NavSatStatus, NavSatFix|
+|geometry_msgs|Point, Vector3, Quaternion, Pose, PoseStamped, Pose2D, Transform, TransformStamped|
+|std_msgs|Bool, Int32, Float32, Header, String|
+|nav_msgs|Path|
+|tf2_msgs|TFMessage|

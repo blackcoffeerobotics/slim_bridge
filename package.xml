@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>slim_bridge</name>
-  <version>0.10.3</version>
+  <version>0.1.0</version>
   <description>A slim bridge between ROS 1 and ROS 2</description>
   <author email="praneeth@blackcoffeerobotics.com">Kvk Praneeth</author>
   <maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
@@ -42,16 +42,6 @@
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>tf2_msgs</exec_depend>
-
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
-  <test_depend>demo_nodes_cpp</test_depend>
-  <test_depend>diagnostic_msgs</test_depend>
-  <test_depend>launch</test_depend>
-  <test_depend>launch_testing</test_depend>
-  <test_depend>launch_testing_ament_cmake</test_depend>
-  <test_depend>launch_testing_ros</test_depend>
-  <test_depend>ros2run</test_depend>
 
   <group_depend>rosidl_interface_packages</group_depend>
 
