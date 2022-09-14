@@ -1,6 +1,6 @@
 # Bridge communication between ROS 1 and ROS 2
 
-This package provides a 2-way communication interface between ROS2 and ROS1 transport systems. Our motivation for developing this arose from working with multi-robot systems where each robot ran a ROS1 navigation system provided by a third-party vendor, but the need to facilitate inter-robot and server <-> robot communications. We took inspiration from the [ROS1 bridge](https://github.com/ros2/ros1_bridge) package but made several changes to serve our use case.
+This package provides a 2-way communication interface between ROS2 and ROS1 transport systems. Our motivation for developing this arose from working with multi-robot systems where each robot ran a ROS1 navigation system provided by a third-party vendor, but the need to facilitate inter-robot and **server <-> robot** communications. We took inspiration from the [ROS1 bridge](https://github.com/ros2/ros1_bridge) package but made several changes to serve our use case.
 
 Primarily we addressed the following limitations found in existing ROS1Bridge implementation to suit our requirements -
 
@@ -12,7 +12,7 @@ There are two main modes of using this package, one is directly using source and
 
 ## Using Docker
 
-Easiest way to setup and use this package is using Dockers. A demo video presenting the entire setup and bridging process is provided [here](res/images/demo.gif). Instructions are provided below - 
+Easiest way to setup and use this package is using Dockers. A demo video presenting the entire setup and bridging process is provided [**HERE**](res/images/demo.gif). Instructions are provided below - 
 #### Build
 	docker build -t slim_bridge:latest .
 #### Configure
