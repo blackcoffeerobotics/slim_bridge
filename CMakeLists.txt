@@ -21,6 +21,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(tf2_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 # find ROS 1 packages
 set(cmake_extras_files cmake/find_ros1_package.cmake)
@@ -52,6 +53,7 @@ find_ros1_package(tf2_msgs REQUIRED)
 find_ros1_package(geometry_msgs REQUIRED)
 find_ros1_package(sensor_msgs REQUIRED)
 find_ros1_package(nav_msgs REQUIRED)
+find_ros1_package(visualization_msgs REQUIRED)
 
 set(SLIM_BRIDGE_DEPENDS
   rclcpp
@@ -65,6 +67,8 @@ set(SLIM_BRIDGE_DEPENDS
   ros1_tf2_msgs
   nav_msgs
   ros1_nav_msgs
+  visualization_msgs
+  ros1_visualization_msgs
 )
 
 ament_export_include_directories("include/${PROJECT_NAME}")

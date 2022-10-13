@@ -35,8 +35,7 @@ struct BridgeOptions {
     rclcpp::QoS qos = reliable_qos;
     size_t queue_size;
     bool latch = false;
-}
-    BridgeOptions;
+} BridgeOptions;
 
 typedef
 struct BridgeHandle {

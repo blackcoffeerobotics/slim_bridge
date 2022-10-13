@@ -73,6 +73,13 @@ namespace slim_bridge {
                         std_msgs::msg::String
                     >
                 >(package_name, message_type);
+            } else if (message_type == "ColorRGBA") {
+                factory =  std::make_shared<
+                    Factory<
+                        std_msgs::ColorRGBA,
+                        std_msgs::msg::ColorRGBA
+                    >
+                >(package_name, message_type);
             }
         } else if (package_name == "geometry_msgs") {
             if (message_type == "Point") {
@@ -205,6 +212,22 @@ namespace slim_bridge {
                     Factory<
                         tf2_msgs::TFMessage,
                         tf2_msgs::msg::TFMessage
+                    >
+                >(package_name, message_type);
+            }
+        } else if (package_name == "visualization_msgs") {
+            if (message_type == "Marker") {
+                factory = std::make_shared<
+                    Factory<
+                        visualization_msgs::Marker,
+                        visualization_msgs::msg::Marker
+                    >
+                >(package_name, message_type);
+            } else if (message_type == "MarkerArray") {
+                factory = std::make_shared<
+                    Factory<
+                        visualization_msgs::MarkerArray,
+                        visualization_msgs::msg::MarkerArray
                     >
                 >(package_name, message_type);
             }

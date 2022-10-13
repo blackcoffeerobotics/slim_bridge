@@ -86,3 +86,4 @@ Both "from source" and Docker based run instructions support namespacing of `sli
 |std_msgs|Bool, Int32, Float32, Header, String|
 |nav_msgs|Path|
 |tf2_msgs|TFMessage|
+|visualization_msgs|Marker, MarkerArray|

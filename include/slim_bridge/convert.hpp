@@ -25,6 +25,7 @@
 #include "std_msgs/msg/float32.hpp"
 #include "std_msgs/msg/header.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "std_msgs/msg/color_rgba.hpp"
 #include "geometry_msgs/msg/point.hpp"
 #include "geometry_msgs/msg/vector3.hpp"
 #include "geometry_msgs/msg/quaternion.hpp"
@@ -44,6 +45,8 @@
 #include "tf2_msgs/TFMessage.h"
 #include "sensor_msgs/msg/nav_sat_status.hpp"
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
+#include "visualization_msgs/msg/marker.hpp"
+#include "visualization_msgs/msg/marker_array.hpp"
 
 // ROS1 Message Inclusions
 #include "std_msgs/Bool.h"
@@ -51,6 +54,7 @@
 #include "std_msgs/Float32.h"
 #include "std_msgs/Header.h"
 #include "std_msgs/String.h"
+#include "std_msgs/ColorRGBA.h"
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/Vector3.h"
 #include "geometry_msgs/Quaternion.h"
@@ -70,6 +74,8 @@
 #include "tf2_msgs/msg/tf_message.hpp"
 #include "sensor_msgs/NavSatStatus.h"
 #include "sensor_msgs/NavSatFix.h"
+#include "visualization_msgs/Marker.h"
+#include "visualization_msgs/MarkerArray.h"
 
 namespace slim_bridge {
 
@@ -115,6 +121,17 @@ namespace slim_bridge {
         std_msgs::msg::String & ros2_msg
     ) {
         ros2_msg.data = ros1_msg.data;
+    }
+
+    template<>
+    void convert_ros1_to_2(
+        const std_msgs::ColorRGBA & ros1_msg,
+        std_msgs::msg::ColorRGBA & ros2_msg
+    ) {
+        ros2_msg.r = ros1_msg.r;
+        ros2_msg.g = ros1_msg.g;
+        ros2_msg.b = ros1_msg.b;
+        ros2_msg.a = ros1_msg.a;
     }
 
     template<>
@@ -339,6 +356,55 @@ namespace slim_bridge {
         }
     }
 
+    template<>
+    void convert_ros1_to_2(
+        const visualization_msgs::Marker & ros1_msg,
+        visualization_msgs::msg::Marker & ros2_msg
+    ) {
+        convert_ros1_to_2(ros1_msg.header, ros2_msg.header);
+        ros2_msg.ns = ros1_msg.ns;
+        ros2_msg.id = ros1_msg.id;
+        ros2_msg.type = ros1_msg.type;
+        ros2_msg.action = ros1_msg.action;
+        convert_ros1_to_2(ros1_msg.pose, ros2_msg.pose);
+        convert_ros1_to_2(ros1_msg.scale, ros2_msg.scale);
+        convert_ros1_to_2(ros1_msg.color, ros2_msg.color);
+        ros2_msg.lifetime.sec = ros1_msg.lifetime.sec;
+        ros2_msg.lifetime.nanosec = ros1_msg.lifetime.nsec;
+        ros2_msg.frame_locked = ros1_msg.frame_locked;
+        std::transform(ros1_msg.points.begin(), ros1_msg.points.end(),
+            std::back_inserter(ros2_msg.points),
+            [](geometry_msgs::Point point) {
+                geometry_msgs::msg::Point returnable;
+                convert_ros1_to_2(point, returnable);
+                return returnable;
+            });
+        std::transform(ros1_msg.colors.begin(), ros1_msg.colors.end(),
+            std::back_inserter(ros2_msg.colors),
+            [](std_msgs::ColorRGBA color) {
+                std_msgs::msg::ColorRGBA returnable;
+                convert_ros1_to_2(color, returnable);
+                return returnable;
+            });
+        ros2_msg.text = ros1_msg.text;
+        ros2_msg.mesh_resource = ros1_msg.mesh_resource;
+        ros2_msg.mesh_use_embedded_materials = ros1_msg.mesh_use_embedded_materials;
+    }
+
+    template<>
+    void convert_ros1_to_2(
+        const visualization_msgs::MarkerArray & ros1_msg,
+        visualization_msgs::msg::MarkerArray & ros2_msg
+    ) {
+        std::transform(ros1_msg.markers.begin(), ros1_msg.markers.end(),
+            std::back_inserter(ros2_msg.markers),
+            [](visualization_msgs::Marker marker) {
+                visualization_msgs::msg::Marker returnable;
+                convert_ros1_to_2(marker, returnable);
+                return returnable;
+            });
+    }
+
     template<typename ROS1_T, typename ROS2_T>
     void convert_ros2_to_1(const ROS2_T & ros2_msg, ROS1_T & ros1_msg);
 
@@ -382,6 +448,17 @@ namespace slim_bridge {
         std_msgs::String & ros1_msg
     ) {
         ros1_msg.data = ros2_msg.data;
+    }
+
+    template<>
+    void convert_ros2_to_1(
+        const std_msgs::msg::ColorRGBA & ros2_msg,
+        std_msgs::ColorRGBA & ros1_msg
+    ) {
+        ros1_msg.r = ros2_msg.r;
+        ros1_msg.g = ros2_msg.g;
+        ros1_msg.b = ros2_msg.b;
+        ros1_msg.a = ros2_msg.a;
     }
 
     template<>
@@ -604,6 +681,55 @@ namespace slim_bridge {
         for (size_t i = 0; i < ros2_msg.position_covariance.size(); i++) {
             ros1_msg.position_covariance[i] = ros2_msg.position_covariance[i];
         }
+    }
+
+    template<>
+    void convert_ros2_to_1(
+        const visualization_msgs::msg::Marker & ros2_msg,
+        visualization_msgs::Marker & ros1_msg
+    ) {
+        convert_ros2_to_1(ros2_msg.header, ros1_msg.header);
+        ros1_msg.ns = ros2_msg.ns;
+        ros1_msg.id = ros2_msg.id;
+        ros1_msg.type = ros2_msg.type;
+        ros1_msg.action = ros2_msg.action;
+        convert_ros2_to_1(ros2_msg.pose, ros1_msg.pose);
+        convert_ros2_to_1(ros2_msg.scale, ros1_msg.scale);
+        convert_ros2_to_1(ros2_msg.color, ros1_msg.color);
+        ros1_msg.lifetime.sec = ros2_msg.lifetime.sec;
+        ros1_msg.lifetime.nsec = ros2_msg.lifetime.nanosec;
+        ros1_msg.frame_locked = ros2_msg.frame_locked;
+        std::transform(ros2_msg.points.begin(), ros2_msg.points.end(),
+            std::back_inserter(ros1_msg.points),
+            [](geometry_msgs::msg::Point point) {
+                geometry_msgs::Point returnable;
+                convert_ros2_to_1(point, returnable);
+                return returnable;
+            });
+        std::transform(ros2_msg.colors.begin(), ros2_msg.colors.end(),
+            std::back_inserter(ros1_msg.colors),
+            [](std_msgs::msg::ColorRGBA color) {
+                std_msgs::ColorRGBA returnable;
+                convert_ros2_to_1(color, returnable);
+                return returnable;
+            });
+        ros1_msg.text = ros2_msg.text;
+        ros1_msg.mesh_resource = ros2_msg.mesh_resource;
+        ros1_msg.mesh_use_embedded_materials = ros2_msg.mesh_use_embedded_materials;
+    }
+
+    template<>
+    void convert_ros2_to_1(
+        const visualization_msgs::msg::MarkerArray & ros2_msg,
+        visualization_msgs::MarkerArray & ros1_msg
+    ) {
+        std::transform(ros2_msg.markers.begin(), ros2_msg.markers.end(),
+            std::back_inserter(ros1_msg.markers),
+            [](visualization_msgs::msg::Marker marker) {
+                visualization_msgs::Marker returnable;
+                convert_ros2_to_1(marker, returnable);
+                return returnable;
+            });
     }
 
 }  // namespace slim_bridge
